@@ -25,11 +25,11 @@ class _AboutPageState extends State<AboutPage> {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> launchInBrowser({required String sourceUrl}) async {
+    launchInBrowser({required String sourceUrl}) async {
       final Uri url = Uri.parse(sourceUrl);
       if (!await launchUrl(
         url,
-        mode: LaunchMode.externalNonBrowserApplication,
+        mode: LaunchMode.externalApplication,
       )) {
         throw Exception('Could not launch $url');
       }
@@ -110,30 +110,35 @@ class _AboutPageState extends State<AboutPage> {
           Row(
             children: [
               for (int i = 0; i < socialMedias.length; i++)
-                MouseRegion(
-                  onEnter: (event) => onEnter(true, i),
-                  onExit: (event) => onEnter(false, i),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    transform: currentHoveredIndex == i ? transform : null,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: isNotWeb ? 40 : 60,
-                      width: isNotWeb ? 40 : 60,
-                      margin: const EdgeInsets.only(right: 20),
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: isNotWeb
-                                ? Colors.deepPurpleAccent
-                                : Colors.cyan,
-                            width: isNotWeb ? 2 : 3),
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: FaIcon(
-                        socialMedias[i].icon,
-                        color: Colors.white,
-                        size: isNotWeb ? 26 : 40,
+                GestureDetector(
+                  onTap: () {
+                    launchInBrowser(sourceUrl: socialMedias[i].url!);
+                  },
+                  child: MouseRegion(
+                    onEnter: (event) => onEnter(true, i),
+                    onExit: (event) => onEnter(false, i),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      transform: currentHoveredIndex == i ? transform : null,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: isNotWeb ? 40 : 60,
+                        width: isNotWeb ? 40 : 60,
+                        margin: const EdgeInsets.only(right: 20),
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: isNotWeb
+                                  ? Colors.deepPurpleAccent
+                                  : Colors.cyan,
+                              width: isNotWeb ? 2 : 3),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: FaIcon(
+                          socialMedias[i].icon,
+                          color: Colors.white,
+                          size: isNotWeb ? 26 : 40,
+                        ),
                       ),
                     ),
                   ),

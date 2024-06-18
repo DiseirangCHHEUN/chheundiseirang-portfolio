@@ -58,14 +58,27 @@ List<Operating> operatings = [
 
 class SocialMedia {
   IconData? icon;
-  SocialMedia({required this.icon});
+  String? url;
+  SocialMedia({required this.icon, required this.url});
 }
 
 List<SocialMedia> socialMedias = [
-  SocialMedia(icon: FontAwesomeIcons.github),
-  SocialMedia(icon: FontAwesomeIcons.linkedin),
-  SocialMedia(icon: FontAwesomeIcons.telegram),
-  SocialMedia(icon: FontAwesomeIcons.facebook),
+  SocialMedia(
+    icon: FontAwesomeIcons.github,
+    url: 'https://github.com/DiseirangCHHEUN',
+  ),
+  SocialMedia(
+    icon: FontAwesomeIcons.linkedin,
+    url: 'https://www.linkedin.com/in/chheun-diseirang',
+  ),
+  SocialMedia(
+    icon: FontAwesomeIcons.telegram,
+    url: 'https://t.me/DiseirangCHHEUN',
+  ),
+  SocialMedia(
+    icon: FontAwesomeIcons.facebook,
+    url: 'https://www.facebook.com/ChheunDiseirang',
+  ),
 ];
 
 class NavItem {
