@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "chheundzrang-portfolio"
-  }
+    "default": "diseirangchheun-portfolio",
+    "diseirang": "diseirangchheun-portfolio"
+  },
+  "targets": {},
+  "etags": {}
 }

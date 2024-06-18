@@ -32,14 +32,15 @@ class _MobileLayoutState extends State<MobileLayout> {
         backgroundColor: Colors.transparent.withOpacity(.5),
         child: ListView(
           children: [
-            const DrawerHeader(
+            DrawerHeader(
               child: Column(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     backgroundImage: AssetImage('assets/images/profile.jpg'),
                     maxRadius: 50,
                   ),
-                  Text('data'),
+                  const SizedBox(height: 5),
+                  buildOwnerName('DZ-Rang CHHEUN', 18)
                 ],
               ),
             ),
