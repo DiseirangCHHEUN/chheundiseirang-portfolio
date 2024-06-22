@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pod_player/pod_player.dart';
+// import 'package:pod_player/pod_player.dart';
 import 'package:portfolio/models/project_model.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class ProjectPage extends StatelessWidget {
   const ProjectPage({super.key});
@@ -51,53 +52,87 @@ class ProjectCard extends StatefulWidget {
 }
 
 class _ProjectCardState extends State<ProjectCard> {
-  late PodPlayerController controller;
+  late YoutubePlayerController controller;
   @override
   void initState() {
     try {
-      controller = PodPlayerController(
-        playVideoFrom: PlayVideoFrom.youtube(projects[widget.index].vdo!),
-        podPlayerConfig: const PodPlayerConfig(
-          autoPlay: true,
-          isLooping: false,
-          // videoQualityPriority: [720, 360],
+      var vdoId = projects[widget.index].vdo!.substring(32);
+      controller = YoutubePlayerController.fromVideoId(
+        videoId: vdoId,
+        params: const YoutubePlayerParams(
+          showControls: true,
+          mute: false,
+          showFullscreenButton: true,
+          loop: false,
         ),
-      )..initialise();
+        autoPlay: true,
+      );
     } catch (e) {
       throw Exception(e);
     }
     super.initState();
   }
 
+  // late PodPlayerController controller;
+  // @override
+  // void initState() {
+  //   try {
+  //     controller = PodPlayerController(
+  //       playVideoFrom: PlayVideoFrom.youtube(projects[widget.index].vdo!),
+  //       podPlayerConfig: const PodPlayerConfig(
+  //         autoPlay: true,
+  //         isLooping: false,
+  //         // videoQualityPriority: [720, 360],
+  //       ),
+  //     )..initialise();
+  //   } catch (e) {
+  //     throw Exception(e);
+  //   }
+  //   super.initState();
+  // }
+  @override
+  void deactivate() {
+    controller.stopVideo();
+    initState();
+    super.deactivate();
+  }
+
   @override
   void dispose() {
-    controller.dispose();
+    controller.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => showDialog(
-          builder: (context) => Padding(
-                padding: EdgeInsets.all(widget.isWeb ? 20 : 10),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: PodVideoPlayer(
-                    controller: controller,
+      onTap: () {
+        showDialog(
+            builder: (context) => Padding(
+                  padding: EdgeInsets.all(widget.isWeb ? 50 : 20),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: YoutubePlayer(
+                      controller: controller,
+                      aspectRatio: 16 / 9,
+                      enableFullScreenOnVerticalDrag: true,
+                    ),
+                    // child: PodVideoPlayer(
+                    //   controller: controller,
+                    // ),
                   ),
                 ),
-              ),
-          // AlertDialog(
-          //       contentPadding: const EdgeInsets.all(0),
-          //       content: ClipRRect(
-          //         borderRadius: BorderRadius.circular(10),
-          //         child: PodVideoPlayer(
-          //           controller: controller,
-          //         ),
-          //       ),
-          //     ),
-          context: context),
+            // AlertDialog(
+            //       contentPadding: const EdgeInsets.all(0),
+            //       content: ClipRRect(
+            //         borderRadius: BorderRadius.circular(10),
+            //         child: PodVideoPlayer(
+            //           controller: controller,
+            //         ),
+            //       ),
+            //     ),
+            context: context);
+      },
       child: SizedBox(
         height: 170,
         child: Card(
