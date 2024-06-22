@@ -1,89 +1,107 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/models/global_list.dart';
+import 'package:portfolio/models/cert_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CertificationPage extends StatelessWidget {
   const CertificationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    // bool isMobile = width <= 500;
+    // bool isTablet = width <= 1100;
+    // bool isNotWeb = isMobile || isTablet;
+    bool isWeb = width > 1100;
+    double padding = 25;
     return Expanded(
-      child: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 50),
-        shrinkWrap: true,
-        children: [
-          const SizedBox(height: 100),
-          const SkillHeader(title: "Programming Languages"),
-          SkillCardList(list: language),
-          const SizedBox(height: 30),
-          const SkillHeader(title: "Frameworks"),
-          SkillCardList(list: framework),
-          const SizedBox(height: 30),
-          const SkillHeader(title: "Databases"),
-          SkillCardList(list: databases),
-          const SizedBox(height: 30),
-          const SkillHeader(title: "Tools"),
-          SkillCardList(list: tools),
-          const SizedBox(height: 30),
-          const SkillHeader(title: "Operating Systems"),
-          SkillCardList(list: framework),
-        ],
-      ),
+      child: isWeb
+          ? GridView.builder(
+              padding: EdgeInsets.symmetric(
+                  horizontal: padding, vertical: padding - 10),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisExtent: width * .23,
+              ),
+              itemCount: certifications.length,
+              itemBuilder: (context, index) => CertificationCard(
+                index: index,
+              ),
+            )
+          : ListView.builder(
+              padding: EdgeInsets.symmetric(
+                  horizontal: padding - 9, vertical: padding - 10),
+              shrinkWrap: true,
+              itemCount: certifications.length,
+              itemBuilder: (context, index) => CertificationCard(
+                index: index,
+              ),
+            ),
     );
   }
 }
 
-class SkillCardList extends StatelessWidget {
-  const SkillCardList({super.key, required this.list});
-  final List list;
+class CertificationCard extends StatelessWidget {
+  const CertificationCard({super.key, required this.index});
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (int i = 0; i < list.length; i++)
-          Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(15),
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.transparent.withOpacity(.2),
-                ),
-                child: Image.asset(list[i].logo!, fit: BoxFit.contain),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                list[i].title!,
-                style: const TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-      ],
-    );
-  }
-}
+    var width = MediaQuery.of(context).size.width;
+    bool isWeb = width > 1100;
 
-class SkillHeader extends StatelessWidget {
-  const SkillHeader({
-    super.key,
-    required this.title,
-  });
+    launchInBrowser({required String sourceUrl}) async {
+      final Uri url = Uri.parse(sourceUrl);
+      if (await launchUrl(
+        url,
+        mode: LaunchMode.platformDefault,
+      )) {
+        throw Exception('Could not launch $url');
+      }
+    }
 
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 30),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            contentPadding: const EdgeInsets.all(0),
+            content: Stack(
+              children: [
+                GestureDetector(
+                  onTap: () => launchInBrowser(
+                      sourceUrl: certifications[index].sourceUrl!),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.asset(
+                      certifications[index].image!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 15,
+                  right: 15,
+                  child: IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(
+                      Icons.close_rounded,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.asset(
+            certifications[index].image!,
+            width: width,
+            height: isWeb ? width * .5 : width * .63,
+            fit: BoxFit.fill,
+          ),
         ),
       ),
     );

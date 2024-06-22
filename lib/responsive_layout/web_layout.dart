@@ -31,7 +31,7 @@ class _WebLayoutState extends State<WebLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.only(top: 25),
+        // padding: const EdgeInsets.only(top: 25),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
@@ -76,14 +76,14 @@ class _WebLayoutState extends State<WebLayout> {
     final transform = isHovered ? hoveredTransform : Matrix4.identity();
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
       decoration: BoxDecoration(
           color: Colors.transparent.withOpacity(.1),
           borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
           Expanded(
-            child: buildOwnerName('Diseirang CHHEUN', 22),
+            child: buildOwnerName('Diseirang CHHEUN', 18),
           ),
           for (int i = 0; i < navItem.length; i++)
             MouseRegion(
@@ -92,14 +92,24 @@ class _WebLayoutState extends State<WebLayout> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 transform: currentHoveredIndex == i ? transform : null,
-                child: TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(
-                      currentPageIndex == i
-                          ? const Color(0xFF0042BD)
-                          : Colors.cyanAccent.withOpacity(.1),
+                child: FilledButton(
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 18),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
                     ),
+                    backgroundColor: currentPageIndex == i
+                        ? const Color(0xFF0042BD)
+                        : Colors.cyanAccent.withOpacity(.1),
                   ),
+                  // style: ButtonStyle(
+                  //   backgroundColor: WidgetStatePropertyAll(
+                  //     currentPageIndex == i
+                  //         ? const Color(0xFF0042BD)
+                  //         : Colors.cyanAccent.withOpacity(.1),
+                  //   ),
+                  // ),
                   onPressed: () {
                     setState(() {
                       currentPageIndex = i;

@@ -43,7 +43,6 @@ class ProjectCard extends StatefulWidget {
     required this.index,
   });
   final int index;
-
   final bool isWeb;
 
   @override
@@ -56,9 +55,13 @@ class _ProjectCardState extends State<ProjectCard> {
   void initState() {
     try {
       controller = PodPlayerController(
-        playVideoFrom: PlayVideoFrom.asset(projects[widget.index].vdo!),
+        // playVideoFrom: PlayVideoFrom.youtube(
+        //     'https://www.youtube.com/watch?v=HIHLgNLL3bs')
+        playVideoFrom: PlayVideoFrom.youtube(projects[widget.index].vdo!),
       )..initialise();
-    } catch (e) {}
+    } catch (e) {
+      throw Exception(e);
+    }
     super.initState();
   }
 

@@ -27,7 +27,7 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     launchInBrowser({required String sourceUrl}) async {
       final Uri url = Uri.parse(sourceUrl);
-      if (!await launchUrl(
+      if (await launchUrl(
         url,
         mode: LaunchMode.externalApplication,
       )) {
