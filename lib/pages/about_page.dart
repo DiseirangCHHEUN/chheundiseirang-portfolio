@@ -61,7 +61,7 @@ class _AboutPageState extends State<AboutPage> {
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: 3,
-                      color: Colors.cyan,
+                      color: const Color(0xFF32D5FC),
                       strokeAlign: BorderSide.strokeAlignOutside,
                     ),
                     borderRadius: BorderRadius.circular(100),
@@ -84,7 +84,7 @@ class _AboutPageState extends State<AboutPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Hi, I'm DZ-Rang CHHEUN",
+                      "Hello, \nI'm DZ-Rang CHHEUN",
                       style: TextStyle(
                         fontSize: isMobile ? 26 : 42,
                         fontWeight: FontWeight.bold,
@@ -130,7 +130,7 @@ class _AboutPageState extends State<AboutPage> {
                           border: Border.all(
                               color: isNotWeb
                                   ? Colors.deepPurpleAccent
-                                  : Colors.cyan,
+                                  : const Color(0xFF32D5FC),
                               width: isNotWeb ? 2 : 3),
                           borderRadius: BorderRadius.circular(100),
                         ),

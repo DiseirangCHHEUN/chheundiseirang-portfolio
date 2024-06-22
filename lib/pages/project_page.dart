@@ -1,89 +1,166 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/models/global_list.dart';
+import 'package:pod_player/pod_player.dart';
+import 'package:portfolio/models/project_model.dart';
 
 class ProjectPage extends StatelessWidget {
   const ProjectPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    bool isWeb = width > 1100;
     return Expanded(
-      child: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 50),
-        shrinkWrap: true,
-        children: [
-          const SizedBox(height: 100),
-          const SkillHeader(title: "Programming Languages"),
-          SkillCardList(list: language),
-          const SizedBox(height: 30),
-          const SkillHeader(title: "Frameworks"),
-          SkillCardList(list: framework),
-          const SizedBox(height: 30),
-          const SkillHeader(title: "Databases"),
-          SkillCardList(list: databases),
-          const SizedBox(height: 30),
-          const SkillHeader(title: "Tools"),
-          SkillCardList(list: tools),
-          const SizedBox(height: 30),
-          const SkillHeader(title: "Operating Systems"),
-          SkillCardList(list: framework),
-        ],
-      ),
+      child: isWeb
+          ? GridView.builder(
+              padding: EdgeInsets.all(isWeb ? 25 : 16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisExtent: 200,
+              ),
+              itemCount: projects.length,
+              itemBuilder: (context, index) => ProjectCard(
+                isWeb: isWeb,
+                index: index,
+              ),
+            )
+          : ListView.builder(
+              padding: EdgeInsets.all(isWeb ? 25 : 16),
+              shrinkWrap: true,
+              itemCount: projects.length,
+              itemBuilder: (context, index) => ProjectCard(
+                isWeb: isWeb,
+                index: index,
+              ),
+            ),
     );
   }
 }
 
-class SkillCardList extends StatelessWidget {
-  const SkillCardList({super.key, required this.list});
-  final List list;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        for (int i = 0; i < list.length; i++)
-          Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(15),
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                height: 100,
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.transparent.withOpacity(.2),
-                ),
-                child: Image.asset(list[i].logo!, fit: BoxFit.contain),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                list[i].title!,
-                style: const TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-      ],
-    );
-  }
-}
-
-class SkillHeader extends StatelessWidget {
-  const SkillHeader({
+class ProjectCard extends StatefulWidget {
+  const ProjectCard({
     super.key,
-    required this.title,
+    required this.isWeb,
+    required this.index,
   });
+  final int index;
 
-  final String title;
+  final bool isWeb;
+
+  @override
+  State<ProjectCard> createState() => _ProjectCardState();
+}
+
+class _ProjectCardState extends State<ProjectCard> {
+  late final PodPlayerController controller;
+  @override
+  void initState() {
+    try {
+      controller = PodPlayerController(
+        playVideoFrom: PlayVideoFrom.asset(projects[widget.index].vdo!),
+      )..initialise();
+    } catch (e) {}
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 30),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
+    return GestureDetector(
+      onTap: () => showDialog(
+          builder: (context) => AlertDialog(
+                contentPadding: const EdgeInsets.all(0),
+                content: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: PodVideoPlayer(
+                    controller: controller,
+                  ),
+                ),
+              ),
+          context: context),
+      child: SizedBox(
+        height: 160,
+        child: Card(
+          color: Colors.transparent.withOpacity(.1),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          contentPadding: const EdgeInsets.all(0),
+                          content: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.asset(
+                              projects[widget.index].image!,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      height: widget.isWeb ? 180 : 130,
+                      width: widget.isWeb ? 100 : 70,
+                      projects[widget.index].image!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        projects[widget.index].pName!,
+                        style: TextStyle(
+                          fontSize: widget.isWeb ? 24 : 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        projects[widget.index].pDescription!,
+                        maxLines: 3,
+                        style: TextStyle(
+                          fontSize: widget.isWeb ? 16 : 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Start Date : ${projects[widget.index].pStartDate!}',
+                        style: TextStyle(
+                          fontSize: widget.isWeb ? 14 : 12,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'End Date : ${projects[widget.index].pEngDate!}',
+                        style: TextStyle(
+                          fontSize: widget.isWeb ? 14 : 12,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

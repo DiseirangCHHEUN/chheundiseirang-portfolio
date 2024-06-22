@@ -25,6 +25,7 @@ class _WebLayoutState extends State<WebLayout> {
     const EducationPage(),
     const CertificationPage(),
   ];
+  bool isHovered = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,38 +63,64 @@ class _WebLayoutState extends State<WebLayout> {
     );
   }
 
+  void onEnter(bool isHovered, int index) {
+    setState(() {
+      currentHoveredIndex = index;
+      this.isHovered = isHovered;
+    });
+  }
+
+  int currentHoveredIndex = 0;
   buildNavItem() {
-    return Row(
-      children: [
-        Expanded(
-          child: buildOwnerName('Diseirang CHHEUN', 22),
-        ),
-        for (int i = 0; i < navItem.length; i++)
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(
-                currentPageIndex == i
-                    ? const Color(0xFF0042BD)
-                    : Colors.cyanAccent.withOpacity(.1),
-              ),
-            ),
-            onPressed: () {
-              setState(() {
-                currentPageIndex = i;
-              });
-            },
-            child: Text(
-              currentPageIndex == i
-                  ? navItem[i].title!.toUpperCase()
-                  : navItem[i].title!,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight:
-                    currentPageIndex == i ? FontWeight.bold : FontWeight.normal,
-              ),
-            ),
+    final hoveredTransform = Matrix4.identity()..scale(1.1);
+    final transform = isHovered ? hoveredTransform : Matrix4.identity();
+
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      decoration: BoxDecoration(
+          color: Colors.transparent.withOpacity(.1),
+          borderRadius: BorderRadius.circular(10)),
+      child: Row(
+        children: [
+          Expanded(
+            child: buildOwnerName('Diseirang CHHEUN', 22),
           ),
-      ],
+          for (int i = 0; i < navItem.length; i++)
+            MouseRegion(
+              onEnter: (event) => onEnter(true, i),
+              onExit: (event) => onEnter(false, i),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                transform: currentHoveredIndex == i ? transform : null,
+                child: TextButton(
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(
+                      currentPageIndex == i
+                          ? const Color(0xFF0042BD)
+                          : Colors.cyanAccent.withOpacity(.1),
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentPageIndex = i;
+                    });
+                  },
+                  child: Text(
+                    currentPageIndex == i
+                        ? navItem[i].title!.toUpperCase()
+                        : navItem[i].title!,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: currentPageIndex == i
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

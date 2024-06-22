@@ -44,7 +44,44 @@ class _MobileLayoutState extends State<MobileLayout> {
                 ],
               ),
             ),
-            buildNavItem()
+            for (int i = 0; i < navItem.length; i++)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            currentPageIndex == i
+                                ? const Color(0xFF0042BD)
+                                : Colors.cyanAccent.withOpacity(.1),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            currentPageIndex = i;
+                            Navigator.pop(context);
+                          });
+                        },
+                        child: Text(
+                          currentPageIndex == i
+                              ? navItem[i].title!.toUpperCase()
+                              : navItem[i].title!,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: currentPageIndex == i
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            const SizedBox(height: 10),
+            // buildNavItem()
           ],
         ),
       ),
@@ -92,7 +129,7 @@ class _MobileLayoutState extends State<MobileLayout> {
                 ],
               ),
               page[currentPageIndex],
-              const SizedBox(height: 20),
+              // const SizedBox(height: 20),
             ],
           ),
         ),
@@ -136,6 +173,7 @@ class _MobileLayoutState extends State<MobileLayout> {
               ),
             ],
           ),
+        const SizedBox(height: 5),
       ],
     );
   }
