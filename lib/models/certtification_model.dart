@@ -20,7 +20,7 @@ List<CertModel> certifications = [
   CertModel(
     image: 'assets/certifications/flutter_ui_bootcamp.jpg',
     sourceUrl:
-        'https://www.udemy.com/certificate/UC-0c5947b4-7542-4d85-ab92-adbfce2733db/',
+        'https://www.udemy.com/certificate/UC-e336ec14-1d35-4dfa-91e4-2cd9ec5cedb4/',
   ),
   CertModel(
     image: 'assets/certifications/css_intro.jpg',

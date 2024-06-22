@@ -51,12 +51,15 @@ class _MobileLayoutState extends State<MobileLayout> {
                   children: [
                     Expanded(
                       child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: WidgetStatePropertyAll(
-                            currentPageIndex == i
-                                ? const Color(0xFF0042BD)
-                                : Colors.cyanAccent.withOpacity(.1),
+                        style: FilledButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 18),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
                           ),
+                          backgroundColor: currentPageIndex == i
+                              ? const Color(0xFF0042BD)
+                              : Colors.cyanAccent.withOpacity(.1),
                         ),
                         onPressed: () {
                           setState(() {

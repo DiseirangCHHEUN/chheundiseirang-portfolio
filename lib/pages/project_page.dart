@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pod_player/pod_player.dart';
 import 'package:portfolio/models/project_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectPage extends StatelessWidget {
   const ProjectPage({super.key});
@@ -50,14 +51,17 @@ class ProjectCard extends StatefulWidget {
 }
 
 class _ProjectCardState extends State<ProjectCard> {
-  late final PodPlayerController controller;
+  late PodPlayerController controller;
   @override
   void initState() {
     try {
       controller = PodPlayerController(
-        // playVideoFrom: PlayVideoFrom.youtube(
-        //     'https://www.youtube.com/watch?v=HIHLgNLL3bs')
         playVideoFrom: PlayVideoFrom.youtube(projects[widget.index].vdo!),
+        podPlayerConfig: const PodPlayerConfig(
+          autoPlay: true,
+          isLooping: false,
+          // videoQualityPriority: [720, 360],
+        ),
       )..initialise();
     } catch (e) {
       throw Exception(e);
@@ -75,18 +79,27 @@ class _ProjectCardState extends State<ProjectCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => showDialog(
-          builder: (context) => AlertDialog(
-                contentPadding: const EdgeInsets.all(0),
-                content: ClipRRect(
+          builder: (context) => Padding(
+                padding: EdgeInsets.all(widget.isWeb ? 20 : 10),
+                child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: PodVideoPlayer(
                     controller: controller,
                   ),
                 ),
               ),
+          // AlertDialog(
+          //       contentPadding: const EdgeInsets.all(0),
+          //       content: ClipRRect(
+          //         borderRadius: BorderRadius.circular(10),
+          //         child: PodVideoPlayer(
+          //           controller: controller,
+          //         ),
+          //       ),
+          //     ),
           context: context),
       child: SizedBox(
-        height: 160,
+        height: 170,
         child: Card(
           color: Colors.transparent.withOpacity(.1),
           child: Padding(
@@ -127,12 +140,25 @@ class _ProjectCardState extends State<ProjectCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        projects[widget.index].pName!,
-                        style: TextStyle(
-                          fontSize: widget.isWeb ? 24 : 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                      FilledButton(
+                        onPressed: () => launchUrl(
+                          Uri.parse(projects[widget.index].vdo!),
+                        ),
+                        style: FilledButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          backgroundColor: const Color(0xFF0042BD),
+                        ),
+                        child: Text(
+                          projects[widget.index].pName!,
+                          style: TextStyle(
+                            fontSize: widget.isWeb ? 24 : 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       Text(
