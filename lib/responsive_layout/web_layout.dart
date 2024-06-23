@@ -95,7 +95,7 @@ class _WebLayoutState extends State<WebLayout> {
                 child: FilledButton(
                   style: FilledButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 18),
+                        horizontal: 25, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),

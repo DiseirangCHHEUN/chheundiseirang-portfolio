@@ -35,18 +35,28 @@ class _MobileLayoutState extends State<MobileLayout> {
             DrawerHeader(
               child: Column(
                 children: [
-                  const CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/profile.jpg'),
-                    maxRadius: 50,
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 4,
+                        color: Colors.cyanAccent.withOpacity(.3),
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      maxRadius: 45,
+                      backgroundImage: AssetImage('assets/images/profile.png'),
+                    ),
                   ),
                   const SizedBox(height: 5),
-                  buildOwnerName('DZ-Rang CHHEUN', 18)
+                  buildOwnerName('DZ-Rang CHHEUN', 16)
                 ],
               ),
             ),
             for (int i = 0; i < navItem.length; i++)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
+                padding: const EdgeInsets.symmetric(vertical: 2.5),
                 child: Row(
                   children: [
                     Expanded(

@@ -55,54 +55,48 @@ class _AboutPageState extends State<AboutPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 3,
-                      color: const Color(0xFF32D5FC),
-                      strokeAlign: BorderSide.strokeAlignOutside,
-                    ),
-                    borderRadius: BorderRadius.circular(100),
-                    image: const DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage('assets/images/profile.jpg'),
-                    ),
-                  ),
-                ),
+                buildAvatarProfile(),
               ],
             ),
           ),
           SizedBox(height: isNotWeb ? 15 : 30),
-          Row(
-            children: [
-              SizedBox(
-                width: isNotWeb ? width * .9 - padding : 600,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Hello, \nI'm DZ-Rang CHHEUN",
-                      style: TextStyle(
-                        fontSize: isMobile ? 26 : 42,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.cyan,
+          SizedBox(
+            width: isNotWeb ? width * .9 - padding : 600,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Hello, \nI'm DZ-Rang CHHEUN",
+                        style: TextStyle(
+                          fontSize: isMobile ? 26 : 42,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.cyan,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      "a passionate Flutter developer with a strong foundation in software development and a keen interest in building innovative mobile applications. With a solid understanding of Flutter's architecture and a knack for problem-solving, I strive to deliver high-quality, user-friendly, and efficient solutions.",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: isNotWeb ? 16 : 20,
-                      ),
-                    )
-                  ],
+                      const SizedBox(height: 10),
+                      Text(
+                        "a passionate Flutter developer with a strong foundation in software development and a keen interest in building innovative mobile applications. With a solid understanding of Flutter's architecture and a knack for problem-solving, I strive to deliver high-quality, user-friendly, and efficient solutions.",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: isNotWeb ? 16 : 20,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                Visibility(
+                  visible: isWeb,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 50),
+                    child: buildAvatarProfile(),
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: isNotWeb ? 15 : 30),
           buildOwnerName('Contact me at 👇🏻', isNotWeb ? 18 : 20),
@@ -224,20 +218,24 @@ class _AboutPageState extends State<AboutPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'All rights reserved ',
-                style: TextStyle(
-                  fontSize: isWeb ? 20 : 16,
-                  color: Colors.white,
-                ),
-              ),
-              Text(
-                'DZ-Rang ©2024',
-                style: TextStyle(
-                  fontSize: isWeb ? 20 : 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              Column(
+                children: [
+                  Text(
+                    'All rights reserved ',
+                    style: TextStyle(
+                      fontSize: isWeb ? 16 : 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    '©2024 DZ-Rang',
+                    style: TextStyle(
+                      fontSize: isWeb ? 16 : 12,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -248,17 +246,17 @@ class _AboutPageState extends State<AboutPage> {
                 'Power by  ',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: isWeb ? 20 : 16,
+                  fontSize: isWeb ? 16 : 12,
                 ),
               ),
               FlutterLogo(
-                size: isWeb ? 30 : 20,
+                size: isWeb ? 25 : 18,
               ),
               Text(
                 ' Flutter',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: isWeb ? 20 : 16,
+                  fontSize: isWeb ? 16 : 12,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -266,6 +264,25 @@ class _AboutPageState extends State<AboutPage> {
           ),
           const SizedBox(height: 16),
         ],
+      ),
+    );
+  }
+
+  Container buildAvatarProfile() {
+    var width = MediaQuery.of(context).size.width;
+    bool isSmallMobile = width < 350;
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 4,
+          color: Colors.cyanAccent.withOpacity(.3),
+        ),
+        shape: BoxShape.circle,
+      ),
+      child: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        maxRadius: isSmallMobile ? 70 : 120,
+        backgroundImage: const AssetImage('assets/images/profile.png'),
       ),
     );
   }

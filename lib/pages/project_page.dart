@@ -181,11 +181,13 @@ class _ProjectCardState extends State<ProjectCard> {
                         ),
                         style: FilledButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
+                            horizontal: 16,
+                            vertical: 5,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          backgroundColor: const Color(0xFF0042BD),
+                          backgroundColor: Colors.cyanAccent.withOpacity(.2),
                         ),
                         child: Text(
                           projects[widget.index].pName!,
@@ -196,6 +198,7 @@ class _ProjectCardState extends State<ProjectCard> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 5),
                       Text(
                         projects[widget.index].pDescription!,
                         maxLines: 3,
