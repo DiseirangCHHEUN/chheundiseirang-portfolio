@@ -127,7 +127,7 @@ class _TabletLayoutState extends State<TabletLayout> {
                       ),
                       backgroundColor: currentPageIndex == i
                           ? const Color(0xFF0042BD)
-                          : Colors.cyanAccent.withOpacity(.1),
+                          : Colors.cyanAccent.withOpacity(.3),
                     ),
                     onPressed: () {
                       setState(() {
@@ -135,15 +135,26 @@ class _TabletLayoutState extends State<TabletLayout> {
                         Navigator.pop(context);
                       });
                     },
-                    child: Text(
-                      currentPageIndex == i
-                          ? navItem[i].title!.toUpperCase()
-                          : navItem[i].title!,
-                      style: TextStyle(
+                    child: ListTile(
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios_rounded,
                         color: Colors.white,
-                        fontWeight: currentPageIndex == i
-                            ? FontWeight.bold
-                            : FontWeight.normal,
+                        size: 12,
+                      ),
+                      leading: Icon(
+                        navItem[i].icon,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        currentPageIndex == i
+                            ? navItem[i].title.toUpperCase()
+                            : navItem[i].title,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: currentPageIndex == i
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                        ),
                       ),
                     ),
                   ),

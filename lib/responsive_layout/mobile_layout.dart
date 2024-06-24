@@ -77,15 +77,26 @@ class _MobileLayoutState extends State<MobileLayout> {
                             Navigator.pop(context);
                           });
                         },
-                        child: Text(
-                          currentPageIndex == i
-                              ? navItem[i].title!.toUpperCase()
-                              : navItem[i].title!,
-                          style: TextStyle(
+                        child: ListTile(
+                          trailing: const Icon(
+                            Icons.arrow_forward_ios_rounded,
                             color: Colors.white,
-                            fontWeight: currentPageIndex == i
-                                ? FontWeight.bold
-                                : FontWeight.normal,
+                            size: 12,
+                          ),
+                          leading: Icon(
+                            navItem[i].icon,
+                            color: Colors.white,
+                          ),
+                          title: Text(
+                            currentPageIndex == i
+                                ? navItem[i].title.toUpperCase()
+                                : navItem[i].title,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: currentPageIndex == i
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                            ),
                           ),
                         ),
                       ),
@@ -147,47 +158,6 @@ class _MobileLayoutState extends State<MobileLayout> {
           ),
         ),
       ),
-    );
-  }
-
-  buildNavItem() {
-    return Column(
-      children: [
-        for (int i = 0; i < navItem.length; i++)
-          Row(
-            children: [
-              Expanded(
-                child: TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(
-                      currentPageIndex == i
-                          ? const Color(0xFF0042BD)
-                          : Colors.cyanAccent.withOpacity(.1),
-                    ),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      currentPageIndex = i;
-                      Navigator.pop(context);
-                    });
-                  },
-                  child: Text(
-                    currentPageIndex == i
-                        ? navItem[i].title!.toUpperCase()
-                        : navItem[i].title!,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: currentPageIndex == i
-                          ? FontWeight.bold
-                          : FontWeight.normal,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        const SizedBox(height: 5),
-      ],
     );
   }
 }

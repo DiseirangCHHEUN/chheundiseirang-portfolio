@@ -117,8 +117,8 @@ class _WebLayoutState extends State<WebLayout> {
                   },
                   child: Text(
                     currentPageIndex == i
-                        ? navItem[i].title!.toUpperCase()
-                        : navItem[i].title!,
+                        ? navItem[i].title.toUpperCase()
+                        : navItem[i].title,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: currentPageIndex == i

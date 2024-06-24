@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/models/certtification_model.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -96,12 +97,24 @@ class CertificationCard extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: Image.asset(
-            certifications[index].image!,
-            width: width,
+          child: CachedNetworkImage(
+            placeholder: (context, url) => Image.asset(
+              'assets/images/loading_image.gif',
+              fit: BoxFit.fill,
+            ),
+            imageUrl: certifications[index].image!,
             height: isWeb ? width * .5 : width * .63,
             fit: BoxFit.fill,
-          ),
+            width: width,
+          )
+
+          // Image.asset(
+          //   certifications[index].image!,
+          //   width: width,
+          //   height: isWeb ? width * .5 : width * .63,
+          //   fit: BoxFit.fill,
+          // )
+          ,
         ),
       ),
     );

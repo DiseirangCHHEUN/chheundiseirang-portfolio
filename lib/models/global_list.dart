@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Language {
@@ -82,15 +83,34 @@ List<SocialMedia> socialMedias = [
 ];
 
 class NavItem {
-  String? title;
-  NavItem({required this.title});
+  IconData icon;
+  String title;
+  NavItem({required this.title, required this.icon});
 }
 
 List<NavItem> navItem = [
-  NavItem(title: 'About Me'),
-  NavItem(title: 'Skills'),
-  NavItem(title: 'Projects'),
-  NavItem(title: 'Experiences'),
-  NavItem(title: 'Education'),
-  NavItem(title: 'Certification'),
+  NavItem(
+    icon: Icons.info_rounded,
+    title: 'About Me',
+  ),
+  NavItem(
+    icon: Icons.code_rounded,
+    title: 'Skills',
+  ),
+  NavItem(
+    icon: Icons.category_rounded,
+    title: 'Projects',
+  ),
+  NavItem(
+    icon: Icons.work_rounded,
+    title: 'Experiences',
+  ),
+  NavItem(
+    icon: Icons.school_rounded,
+    title: 'Education',
+  ),
+  NavItem(
+    icon: Icons.card_membership_rounded,
+    title: 'Certification',
+  ),
 ];
