@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/models/certtification_model.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,9 +18,9 @@ class CertificationPage extends StatelessWidget {
           ? GridView.builder(
               padding: EdgeInsets.symmetric(
                   horizontal: padding, vertical: padding - 10),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisExtent: width * .23,
+                mainAxisExtent: 370,
               ),
               itemCount: certifications.length,
               itemBuilder: (context, index) => CertificationCard(
@@ -48,8 +47,6 @@ class CertificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    bool isWeb = width > 1100;
-
     launchInBrowser({required String sourceUrl}) async {
       final Uri url = Uri.parse(sourceUrl);
       if (await launchUrl(
@@ -97,24 +94,31 @@ class CertificationCard extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: CachedNetworkImage(
-            placeholder: (context, url) => Image.asset(
-              'assets/images/loading_image.gif',
-              fit: BoxFit.fill,
-            ),
-            imageUrl: certifications[index].image!,
-            height: isWeb ? width * .5 : width * .63,
-            fit: BoxFit.fill,
-            width: width,
-          )
+          child:
+              // FadeInImage.assetNetwork(
+              //   placeholder: 'assets/images/loading_image.gif',
+              //   image: certifications[index].image!,
+              //   fit: BoxFit.fill,
+              //   height: width * .63,
+              //   width: width,
+              // )
+              // CachedNetworkImage(
+              //   placeholder: (context, url) => Image.asset(
+              //     'assets/images/loading_image.gif',
+              //     fit: BoxFit.fill,
+              //   ),
+              //   imageUrl: certifications[index].image!,
+              //   height: isWeb ? width * .5 : width * .63,
+              //   fit: BoxFit.fill,
+              //   width: width,
+              // )
 
-          // Image.asset(
-          //   certifications[index].image!,
-          //   width: width,
-          //   height: isWeb ? width * .5 : width * .63,
-          //   fit: BoxFit.fill,
-          // )
-          ,
+              Image.asset(
+            certifications[index].image!,
+            width: width,
+            height: width * .63,
+            fit: BoxFit.fill,
+          ),
         ),
       ),
     );
