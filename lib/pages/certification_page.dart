@@ -20,7 +20,7 @@ class CertificationPage extends StatelessWidget {
                   horizontal: padding, vertical: padding - 10),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisExtent: 370,
+                mainAxisExtent: 400,
               ),
               itemCount: certifications.length,
               itemBuilder: (context, index) => CertificationCard(
@@ -92,33 +92,49 @@ class CertificationCard extends StatelessWidget {
             ),
           ),
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child:
-              // FadeInImage.assetNetwork(
-              //   placeholder: 'assets/images/loading_image.gif',
-              //   image: certifications[index].image!,
-              //   fit: BoxFit.fill,
-              //   height: width * .63,
-              //   width: width,
-              // )
-              // CachedNetworkImage(
-              //   placeholder: (context, url) => Image.asset(
-              //     'assets/images/loading_image.gif',
-              //     fit: BoxFit.fill,
-              //   ),
-              //   imageUrl: certifications[index].image!,
-              //   height: isWeb ? width * .5 : width * .63,
-              //   fit: BoxFit.fill,
-              //   width: width,
-              // )
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              certifications[index].title!,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 10),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child:
+                  // FadeInImage.assetNetwork(
+                  //   placeholder: 'assets/images/loading_image.gif',
+                  //   image: certifications[index].image!,
+                  //   fit: BoxFit.fill,
+                  //   height: width * .63,
+                  //   width: width,
+                  // )
+                  // CachedNetworkImage(
+                  //   placeholder: (context, url) => Image.asset(
+                  //     'assets/images/loading_image.gif',
+                  //     fit: BoxFit.fill,
+                  //   ),
+                  //   imageUrl: certifications[index].image!,
+                  //   height: isWeb ? width * .5 : width * .63,
+                  //   fit: BoxFit.fill,
+                  //   width: width,
+                  // )
 
-              Image.asset(
-            certifications[index].image!,
-            width: width,
-            height: width * .63,
-            fit: BoxFit.fill,
-          ),
+                  Image.asset(
+                certifications[index].image!,
+                width: width,
+                height: 330,
+                // height: width * .63,
+
+                fit: BoxFit.fill,
+              ),
+            ),
+          ],
         ),
       ),
     );

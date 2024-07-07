@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Language {
@@ -34,6 +33,7 @@ class Database extends Language {
 List<Database> databases = [
   Database(title: 'MySQL', logo: 'assets/icons/mysql_logo.png'),
   Database(title: 'SQL Server', logo: 'assets/icons/sql_server_logo.png'),
+  Database(title: 'Firebase', logo: 'assets/icons/firebase_logo.webp'),
 ];
 
 class Tool extends Language {
@@ -46,6 +46,7 @@ List<Tool> tools = [
   Tool(title: 'IntelliJ', logo: 'assets/icons/intellij_logo.png'),
   Tool(title: 'Workbench', logo: 'assets/icons/mysqlworkbench_logo.png'),
   Tool(title: 'Postman', logo: 'assets/icons/postman_logo.png'),
+  Tool(title: 'Git', logo: 'assets/icons/git_logo.png'),
 ];
 
 class Operating extends Language {
@@ -65,21 +66,15 @@ class SocialMedia {
 
 List<SocialMedia> socialMedias = [
   SocialMedia(
-    icon: FontAwesomeIcons.github,
-    url: 'https://github.com/DiseirangCHHEUN',
-  ),
+      icon: FontAwesomeIcons.github, url: 'https://github.com/DiseirangCHHEUN'),
   SocialMedia(
-    icon: FontAwesomeIcons.linkedin,
-    url: 'https://www.linkedin.com/in/chheun-diseirang',
-  ),
+      icon: FontAwesomeIcons.linkedin,
+      url: 'https://www.linkedin.com/in/chheun-diseirang'),
   SocialMedia(
-    icon: FontAwesomeIcons.telegram,
-    url: 'https://t.me/DiseirangCHHEUN',
-  ),
+      icon: FontAwesomeIcons.telegram, url: 'https://t.me/DiseirangCHHEUN'),
   SocialMedia(
-    icon: FontAwesomeIcons.facebook,
-    url: 'https://www.facebook.com/ChheunDiseirang',
-  ),
+      icon: FontAwesomeIcons.facebook,
+      url: 'https://www.facebook.com/ChheunDiseirang'),
 ];
 
 class NavItem {
